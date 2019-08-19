@@ -9,8 +9,14 @@ winningCombo = [
   [7, 5, 3],
 ]
 
+standard_board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 currentPlay = 1
 
-def currentPlayer(num)
+def current_player(num)
   num % 2 == 0 ? 'O' : 'X'
+end
+
+def validate_input(input)
+  input.class == Integer ? true : false
 end
