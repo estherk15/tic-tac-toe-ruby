@@ -57,3 +57,7 @@ def winner?(board)
   end
   return winner
 end
+
+def draw?(board)
+  draw = full_board?(board) && !winner?(board)
+end

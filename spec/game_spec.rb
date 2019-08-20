@@ -95,8 +95,10 @@ RSpec.describe 'game' do
 
   context 'draw?' do
     it 'returns true if there are no winner and the board is full' do
-      board = 
+      board = ['X', 'O', 'X', 'O', 'X', 'X', 'O', 'X', 'O']
+      expect(draw?(board)).to eq(true)
     end
+  end
 
 
 
