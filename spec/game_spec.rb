@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative '../lib/game'
+require 'pry'
 
 RSpec.describe 'game' do
   context 'current_player' do
@@ -81,19 +82,21 @@ RSpec.describe 'game' do
     end
   end
 
-  # context 'winner?' do
-  #   it 'returns false if combination pattern is not winnign pattern' do
-  #     board = ['X', 'O', 'X', 'O', 'X', 'O', 'X', 8, 9]
-  #     combo1 = [0, 1, 2]
-  #     combo2 = [3, 4, 5]
-  #     expect(winner?(board, combo1)).to eq(false)
-  #     expect(winner?(board, combo2)).to eq(false)
-  #   end
-  #   it 'returns false if there are no winning combinations' do
-  #     board = ['X', 'X', 'O', 'O', 'O', 'X', 'X', 8, 9]
-  #     expect(winner?(board)).to eq(false)
-  #   end
-  # end
+  context 'winner?' do
+    it 'returns true if there is a winning combination' do
+      board = ['X', 'X', 'X', 'O', 'X', 'O', 'X', 8, 9]
+      expect(winner?(board)).to eq(true)
+    end
+    it 'returns false if there are no winning combinations' do
+      board = ['X', 'X', 'O', 'O', 'O', 'X', 'X', 8, 9]
+      expect(winner?(board)).to eq(false)
+    end
+  end
+
+  context 'draw?' do
+    it 'returns true if there are no winner and the board is full' do
+      board = 
+    end
 
 
 

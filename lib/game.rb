@@ -1,3 +1,5 @@
+require 'pry'
+
 $winning_combo = [
   [0, 1, 2],
   [3, 4, 5],
@@ -44,8 +46,14 @@ def full_board?(board)
   board.all? {|square| square == 'X' || square == 'O'}
 end
 
-# def winner?(board)
-#   combo.each do |index|
-#     board[index]
-#   end
-# end
+def winner?(board)
+  winner = false
+
+  $winning_combo.any? do |combo|
+    current_combo = combo.map {|index| board[index]}
+    three_in_a_row = ((current_combo[0] == current_combo[1]) && (current_combo[1] == current_combo[2]))
+    # binding.pry
+    winner = three_in_a_row && (current_combo[0].class == String)
+  end
+  return winner
+end
