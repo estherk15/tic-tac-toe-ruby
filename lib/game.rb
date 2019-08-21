@@ -14,7 +14,8 @@ $winning_combo = [
 board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 def play_count(board)
-  board.count {|square| square == 'X' || square == 'O'}
+  count = board.count {|square| square == 'X' || square == 'O'}
+  count + 1
 end
 
 def current_player(num)
@@ -52,12 +53,33 @@ def winner?(board)
   $winning_combo.any? do |combo|
     current_combo = combo.map {|index| board[index]}
     three_in_a_row = ((current_combo[0] == current_combo[1]) && (current_combo[1] == current_combo[2]))
-    # binding.pry
     winner = three_in_a_row && (current_combo[0].class == String)
   end
-  return winner
+  winner
 end
 
 def draw?(board)
   draw = full_board?(board) && !winner?(board)
+end
+
+def move(input, board)
+  turn = play_count(board)
+  token = current_player(turn)
+  if valid_play?(input) && empty_spot?(input, board)
+    index = to_index(input)
+    board[index] = token
+    board
+  end
+end
+
+def open_squares(board)
+  board.select { |square| square.class == Integer }
+end
+
+# def random_square(array, isTest)
+#   isTest ? isTest : array.sample
+# end
+
+def random_square(array)
+  array.sample
 end

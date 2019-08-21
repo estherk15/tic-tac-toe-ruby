@@ -4,7 +4,7 @@ require 'pry'
 
 RSpec.describe 'game' do
   context 'current_player' do
-    it 'prints out the number input' do
+    it 'prints out the current token waiting to make a move' do
       expect(current_player(2)).to eq('O')
       expect(current_player(3)).to eq('X')
     end
@@ -53,11 +53,11 @@ RSpec.describe 'game' do
   end
 
   context 'play_count' do
-    it 'returns how many turns have been played' do
+    it 'returns what turn the next move is' do
       board1 = ['X', 'O', 'X', 4, 5, 6, 7, 8, 9]
       board2 = ['X', 'O', 'X', 'O', 5, 6, 7, 8, 'X']
-      expect(play_count(board1)).to eq(3)
-      expect(play_count(board2)).to eq(5)
+      expect(play_count(board1)).to eq(4)
+      expect(play_count(board2)).to eq(6)
     end
   end
 
@@ -100,7 +100,37 @@ RSpec.describe 'game' do
     end
   end
 
+  context 'move' do
+    it 'replaced the square on the board with token if empty' do
+      board = ['X', 'O', 'X', 4, 5, 6, 7, 8, 9]
+      expect(move(5, board)).to eq(['X', 'O', 'X', 4, 'O', 6, 7, 8, 9])
+    end
+  end
 
+# Single Player Easy mode
+  context 'open_squares' do
+    it 'returns all the squares that do not currently have a token' do
+      board = ['O', 2, 'X', 4, 'X', 6, 'O', 8, 'X']
+      expect(open_squares(board)).to eq([2, 4, 6, 8])
+    end
+  end
+
+  # context 'random_square' do
+  #   it 'given an array returns a random element in the array' do
+  #     available_squares = [2, 4, 6, 8]
+  #     expect(random_square(available_squares, 8)).to eq(8)
+  #   end
+  # end
+
+  context 'random_square' do
+    it 'given an array returns a random element in the array' do
+      available_squares = [2, 4, 6, 8]
+      expect(available_squares[0]..available_squares[-1]).to cover(random_square(available_squares))
+      # binding.pry
+    end
+  end
+
+  
 
 
 end #RSpec.describe
