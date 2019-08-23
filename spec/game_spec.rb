@@ -143,13 +143,13 @@ RSpec.describe 'game' do
 
   context 'minimax' do
     it 'returns the optimal strategic move for a win' do
-      board1 = ['X', 'O', 'X', 4, 5, 6, 7, 8, 9]
+      board1 = ['O', 2, 'X', 'X', 5, 'X', 7, 'O', 'O']
       # board2 = ['X', 'O', 3, 'O', 5, 'X', 'X', 8, 9]
       # board3 = ['X', 2, 3, 4, 'O', 6, 7, 8, 'X']
       # board4 = ['X', 2, 3, 4, 'O', 'X', 7, 8, 9]
       # board5 = [1, 'X', 3, 4, 'O', 'X', 7, 8, 9]
       # board6 = [1, 2, 3, 4, 'X', 6, 7, 8, 9]
-      expect(minimax(test))
+      expect(minimax(board1, 'X')).to
     end
   end
 

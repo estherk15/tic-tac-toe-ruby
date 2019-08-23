@@ -94,3 +94,17 @@ def winning_move(board, token) # has the possibility to return a nil value
   end
   return next_move
 end
+
+def minimax(board, max_player)
+  human = 'X'
+  ai = 'O'
+  possible_moves = open_squares(board)
+  moves = {} # collects each move's square number and score
+  best_move = nil
+  if(winner?(board) || draw?(board))
+    return board # return game_over method after you write it
+  end
+
+  if(max_player)
+    value
+end
