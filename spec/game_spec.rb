@@ -103,11 +103,11 @@ RSpec.describe 'game' do
   context 'move' do
     it 'replaced the square on the board with token if empty' do
       board = ['X', 'O', 'X', 4, 5, 6, 7, 8, 9]
-      expect(move(5, board)).to eq(['X', 'O', 'X', 4, 'O', 6, 7, 8, 9])
+      expect(move(board, 5)).to eq(['X', 'O', 'X', 4, 'O', 6, 7, 8, 9])
     end
   end
 
-# Single Player Easy mode
+# Single Player Easy mode *********************************
   context 'open_squares' do
     it 'returns all the squares that do not currently have a token' do
       board = ['O', 2, 'X', 4, 'X', 6, 'O', 8, 'X']
@@ -115,14 +115,11 @@ RSpec.describe 'game' do
     end
   end
 
-  # context 'random_square' do
-  #   it 'given an array returns a random element in the array' do
-  #     available_squares = [2, 4, 6, 8]
-  #     expect(random_square(available_squares, 8)).to eq(8)
-  #   end
-  # end
-
   context 'random_square' do
+    it 'given a number to test returns that number' do
+      available_squares = [2, 4, 6, 8]
+      expect(random_square(available_squares, 8)).to eq(8)
+    end
     it 'given an array returns a random element in the array' do
       available_squares = [2, 4, 6, 8]
       expect(available_squares[0]..available_squares[-1]).to cover(random_square(available_squares))
@@ -130,7 +127,30 @@ RSpec.describe 'game' do
     end
   end
 
-  
+# Single Player Difficult mode ****************************
+  context 'winning_move' do #this is only called when the player is the computer
+    it 'returns the square that will result in three in a row for given token' do
+      board1 = ['X', 'O', 'X', 'X', 'O', 'X', 'O', 8, 9]
+      board2 = ['X', 'O', 'X', 4, 'X', 'O', 'O', 8, 9]
+      board3 = ['O', 2, 'O', 'X', 'X', 6, 'X', 8, 9]
+      board4 = ['X', 'O', 'X', 'X', 'O', 6, 7, 8, 9]
+      expect(winning_move(board1, 'O')).to eq(8)
+      expect(winning_move(board2, 'X')).to eq(9)
+      expect(winning_move(board3, 'O')).to eq(2)
+      expect(winning_move(board4, 'O')).to eq(8)
+    end
+  end
 
+  context 'minimax' do
+    it 'returns the optimal strategic move for a win' do
+      board1 = ['X', 'O', 'X', 4, 5, 6, 7, 8, 9]
+      # board2 = ['X', 'O', 3, 'O', 5, 'X', 'X', 8, 9]
+      # board3 = ['X', 2, 3, 4, 'O', 6, 7, 8, 'X']
+      # board4 = ['X', 2, 3, 4, 'O', 'X', 7, 8, 9]
+      # board5 = [1, 'X', 3, 4, 'O', 'X', 7, 8, 9]
+      # board6 = [1, 2, 3, 4, 'X', 6, 7, 8, 9]
+      expect(minimax(test))
+    end
+  end
 
 end #RSpec.describe

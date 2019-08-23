@@ -1,6 +1,7 @@
 require 'pry'
 
-$winning_combo = [
+
+WINNING_COMBOS = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -50,7 +51,7 @@ end
 def winner?(board)
   winner = false
 
-  $winning_combo.any? do |combo|
+  WINNING_COMBOS.any? do |combo|
     current_combo = combo.map {|index| board[index]}
     three_in_a_row = ((current_combo[0] == current_combo[1]) && (current_combo[1] == current_combo[2]))
     winner = three_in_a_row && (current_combo[0].class == String)
@@ -62,7 +63,7 @@ def draw?(board)
   draw = full_board?(board) && !winner?(board)
 end
 
-def move(input, board)
+def move(board, input)
   turn = play_count(board)
   token = current_player(turn)
   if valid_play?(input) && empty_spot?(input, board)
@@ -76,10 +77,20 @@ def open_squares(board)
   board.select { |square| square.class == Integer }
 end
 
-# def random_square(array, isTest)
-#   isTest ? isTest : array.sample
-# end
+def random_square(array, isTest=false)
+  isTest ? isTest : array.sample
+end
 
-def random_square(array)
-  array.sample
+def winning_move(board, token) # has the possibility to return a nil value
+  possible_moves = open_squares(board)
+  next_move = nil
+
+  possible_moves.each do |square_num|
+    copy_board = board.slice(0 .. -1)
+    copy_board[square_num - 1] = token
+    if winner?(copy_board)
+       next_move = square_num
+    end
+  end
+  return next_move
 end
