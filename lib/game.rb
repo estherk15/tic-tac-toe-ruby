@@ -94,12 +94,22 @@ def winning_move(board, token) # has the possibility to return a nil value
   return next_move
 end
 
-def minimax(board, max_player)
-  human = 'X'
-  ai = 'O'
+def minimax(board, player)
   possible_moves = open_squares(board)
   moves = {} # collects each move's square number and score
   best_move = nil
 
+  # If the player is X, is there a winning combination for X on the board?
+    #return the square and the score
+
+  #If the player is O, is there a winning combination on the board?
+    # return the square and the score
+
+  # If there is no winner
+    # iterate through the possible_moves and place the player's token on that square.
+    # run the minimax with the new board and the
+
+  # If there is a tie and the board is full
+    #return 0
 
 end
