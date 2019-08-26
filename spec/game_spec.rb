@@ -123,7 +123,6 @@ RSpec.describe 'game' do
     it 'given an array returns a random element in the array' do
       available_squares = [2, 4, 6, 8]
       expect(available_squares[0]..available_squares[-1]).to cover(random_square(available_squares))
-      # binding.pry
     end
   end
 

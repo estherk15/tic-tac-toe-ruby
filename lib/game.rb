@@ -50,9 +50,8 @@ end
 
 def winner?(board)
   winner = false
-
   WINNING_COMBOS.any? do |combo|
-    current_combo = combo.map {|index| board[index]}
+    current_combo = combo.map {|index| board[index]} # This is a new array of the square numbers corresponding to the index numbers listed in WINNING_COMBOS
     three_in_a_row = ((current_combo[0] == current_combo[1]) && (current_combo[1] == current_combo[2]))
     winner = three_in_a_row && (current_combo[0].class == String)
   end
@@ -101,10 +100,6 @@ def minimax(board, max_player)
   possible_moves = open_squares(board)
   moves = {} # collects each move's square number and score
   best_move = nil
-  if(winner?(board) || draw?(board))
-    return board # return game_over method after you write it
-  end
 
-  if(max_player)
-    value
+
 end
