@@ -96,7 +96,8 @@ end
 
 def minimax(board, player)
   possible_moves = open_squares(board)
-  moves = {} # collects each move's square number and score
+  moves = []
+  move_score = {} # collects each move's square number and score
   best_move = nil
 
   # If the player is X, is there a winning combination for X on the board?
@@ -107,9 +108,11 @@ def minimax(board, player)
 
   # If there is no winner
     # iterate through the possible_moves and place the player's token on that square.
-    # run the minimax with the new board and the
+    # run the minimax with the new board and the next player(flip flop from X and O)
 
   # If there is a tie and the board is full
     #return 0
+
+  # You have to keep track of all the moves and the scores, so if you come across a winning move, you enter the square no and the score (10/-10)
 
 end
