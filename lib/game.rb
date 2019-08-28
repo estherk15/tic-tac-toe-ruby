@@ -105,7 +105,6 @@ def score(board)
 end
 
 
-
 # def minimax(board)
 #   player = current_player(board)
 #   possible_moves = open_squares(board)
@@ -117,29 +116,39 @@ end
 #   return current_score if !!game_over
 # end
 
-def minimax(board)
+def minimax(board) # Returns the optimal score of the board
   # return score(board) if game_over
   player = current_player(board)
-  optimal_move = nil
-  moves_scores = {}
   possible_moves = open_squares(board) # Array of square_nums NOT indexes
-binding.pry
-  possible_moves.each do |square_num|
-    new_board = board.slice()
-    new_board[square_num - 1] = player # O
-    new_board_score = score(new_board) # 10
-    if new_board_score = 0 && !draw?(board)
-      moves_scores[square_num] = minimax(new_board)
-    end
-    move_scores[square_num] = new_board_score
+  best_score = player == 'O'? -Float::INFINITY : Float::INFINITY
+  best_move = nil
 
-      # I want this each iteration of possible moves to return a key value pair and at the end of the iterations, push each key value pair to the outer moves_scores object
-
+  # check if there's a winner or it's a tie
+  if winner?(board) || draw?(board)
+    return score(board)
   end
 
-  # if player == 'O'
-  #   optimal_move
-  # end
+  possible_moves.each do |square_num|
+    new_board = board.slice(0 .. -1)
+    new_board[square_num - 1] = player # O
+    new_board_score = minimax(new_board)# 10
 
-  # If the current player is O then I want the highest value from the listed scores and vice versa. 
+    if player == 'O'
+      if best_score < new_board_score
+        best_score = new_board_score
+        best_move = square_num
+      end
+    elsif player == 'X'
+      if best_score > new_board_score
+        best_score = new_board_score
+        best_move = square_num
+      end
+    end
+
+  end
+  best_score
 end
+
+# def optimal_move(scores, player)
+#
+# end

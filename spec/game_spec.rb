@@ -160,10 +160,26 @@ RSpec.describe 'game' do
   end
 
   context 'minimax' do
-    it 'returns the optimal strategic move for a win' do
-      board1 = ['X', 'X', 'O','X', 'X', 'O', 'O', 8, 'O'] # current player is O
-      expect(minimax(board1)).to eq(8)
+    it 'returns the moves and their resulting scores' do
+      board1 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 'O',  9] # current player is X
+      board2 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  'O'] # current player is O
+      board3 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  9] # current player is O
+      board4 = ['X', 2, 'X', 'O', 'O', 6, 7, 8, 9]
+      board5 = ['X', 2, 'O', 'O', 'O', 'X', 'X', 8, 'X']
+      expect(minimax(board1)).to eq(-10)
+      expect(minimax(board2)).to eq(10)
+      expect(minimax(board3)).to eq(10)
+      expect(minimax(board4)).to eq(-10)
+      expect(minimax(board5)).to eq(0)
     end
   end
+
+  # context 'optimal_move' do
+  #   it 'returns the move with the optimal score for the current player' do
+  #     scores = {8=>0, 9=>10}
+  #     player = 'O'
+  #     expect(optimal_move(scores, player)).to eq(8)
+  #   end
+  # end
 
 end #RSpec.describe
