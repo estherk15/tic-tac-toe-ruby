@@ -19,7 +19,8 @@ def play_count(board)
   count + 1
 end
 
-def current_player(num)
+def current_player(board)
+  num = play_count(board)
   num % 2 == 0 ? 'O' : 'X'
 end
 
@@ -55,7 +56,6 @@ def winner?(board)
     three_in_a_row = ((current_combo[0] == current_combo[1]) && (current_combo[1] == current_combo[2]))
     winner = three_in_a_row && (current_combo[0].class == String)
   end
-  winner
 end
 
 def draw?(board)
@@ -63,8 +63,7 @@ def draw?(board)
 end
 
 def move(board, input)
-  turn = play_count(board)
-  token = current_player(turn)
+  token = current_player(board)
   if valid_play?(input) && empty_spot?(input, board)
     index = to_index(input)
     board[index] = token
@@ -80,39 +79,67 @@ def random_square(array, isTest=false)
   isTest ? isTest : array.sample
 end
 
-def winning_move(board, token) # has the possibility to return a nil value
-  possible_moves = open_squares(board)
-  next_move = nil
+# def winning_move(board, token) # has the possibility to return a nil value
+#   possible_moves = open_squares(board)
+#   next_move = nil
+#
+#   possible_moves.each do |square_num|
+#     copy_board = board.slice(0 .. -1)
+#     copy_board[square_num - 1] = token
+#     if winner?(copy_board)
+#        next_move = square_num
+#     end
+#   end
+#   return next_move
+# end
 
-  possible_moves.each do |square_num|
-    copy_board = board.slice(0 .. -1)
-    copy_board[square_num - 1] = token
-    if winner?(copy_board)
-       next_move = square_num
-    end
+def score(board)
+  # you're checking for a win prior to the current player making a move, so you want to see if the previous player has won or not.
+  player = current_player(board)
+  if winner?(board)
+    player == 'O'? -10 : 10
+    # if there's a winner and the current player is O, then that means X has won. -10 :(
+  else
+    return 0
   end
-  return next_move
 end
 
-def minimax(board, player)
-  possible_moves = open_squares(board)
-  moves = []
-  move_score = {} # collects each move's square number and score
-  best_move = nil
 
-  # If the player is X, is there a winning combination for X on the board?
-    #return the square and the score
 
-  #If the player is O, is there a winning combination on the board?
-    # return the square and the score
+# def minimax(board)
+#   player = current_player(board)
+#   possible_moves = open_squares(board)
+#   game_over = winner?(board) || draw?(board)
+#   moves = []
+#   move_score = {} # collects each move's square number and score
+#   current_score = score(board)
+#
+#   return current_score if !!game_over
+# end
 
-  # If there is no winner
-    # iterate through the possible_moves and place the player's token on that square.
-    # run the minimax with the new board and the next player(flip flop from X and O)
+def minimax(board)
+  # return score(board) if game_over
+  player = current_player(board)
+  optimal_move = nil
+  moves_scores = {}
+  possible_moves = open_squares(board) # Array of square_nums NOT indexes
+binding.pry
+  possible_moves.each do |square_num|
+    new_board = board.slice()
+    new_board[square_num - 1] = player # O
+    new_board_score = score(new_board) # 10
+    if new_board_score = 0 && !draw?(board)
+      moves_scores[square_num] = minimax(new_board)
+    end
+    move_scores[square_num] = new_board_score
 
-  # If there is a tie and the board is full
-    #return 0
+      # I want this each iteration of possible moves to return a key value pair and at the end of the iterations, push each key value pair to the outer moves_scores object
 
-  # You have to keep track of all the moves and the scores, so if you come across a winning move, you enter the square no and the score (10/-10)
+  end
 
+  # if player == 'O'
+  #   optimal_move
+  # end
+
+  # If the current player is O then I want the highest value from the listed scores and vice versa. 
 end

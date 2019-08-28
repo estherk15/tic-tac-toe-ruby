@@ -5,8 +5,12 @@ require 'pry'
 RSpec.describe 'game' do
   context 'current_player' do
     it 'prints out the current token waiting to make a move' do
-      expect(current_player(2)).to eq('O')
-      expect(current_player(3)).to eq('X')
+      board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      board1 = ['X', 'O', 'X', 'O', 5, 6, 7, 8, 9]
+      board2 = ['X', 'O', 'X', 'O', 5, 6, 7, 8, 'X']
+      expect(current_player(board)).to eq('X')
+      expect(current_player(board1)).to eq('X')
+      expect(current_player(board2)).to eq('O')
     end
   end
 
@@ -126,29 +130,39 @@ RSpec.describe 'game' do
     end
   end
 
-# Single Player Difficult mode ****************************
-  context 'winning_move' do #this is only called when the player is the computer
-    it 'returns the square that will result in three in a row for given token' do
-      board1 = ['X', 'O', 'X', 'X', 'O', 'X', 'O', 8, 9]
-      board2 = ['X', 'O', 'X', 4, 'X', 'O', 'O', 8, 9]
-      board3 = ['O', 2, 'O', 'X', 'X', 6, 'X', 8, 9]
-      board4 = ['X', 'O', 'X', 'X', 'O', 6, 7, 8, 9]
-      expect(winning_move(board1, 'O')).to eq(8)
-      expect(winning_move(board2, 'X')).to eq(9)
-      expect(winning_move(board3, 'O')).to eq(2)
-      expect(winning_move(board4, 'O')).to eq(8)
+# Single Player Unbeatable mode ****************************
+  # context 'winning_move' do #this is only called when the player is the computer
+  #   it 'returns the square that will result in three in a row for given token' do
+  #     board1 = ['X', 'O', 'X', 'X', 'O', 'X', 'O', 8, 9]
+  #     board2 = ['X', 'O', 'X', 4, 'X', 'O', 'O', 8, 9]
+  #     board3 = ['O', 2, 'O', 'X', 'X', 6, 'X', 8, 9]
+  #     board4 = ['X', 'O', 'X', 'X', 'O', 6, 7, 8, 9]
+  #     expect(winning_move(board1, 'O')).to eq(8)
+  #     expect(winning_move(board2, 'X')).to eq(9)
+  #     expect(winning_move(board3, 'O')).to eq(2)
+  #     expect(winning_move(board4, 'O')).to eq(8)
+  #   end
+  # end
+
+  context 'score' do
+    it 'returns a min or max score based on status of the board' do
+      board1 = ['O', 2, 'X', 'X', 5, 'X', 7, 'O', 'O'] # current player is X
+      board2 = ['O', 'X', 'X', 'X', 5, 'X', 7, 'O', 'O'] # current player is O
+      board3 = ['O', 2, 'X', 'X', 'X', 'X', 7, 'O', 'O'] # current player is O
+      board4 = ['O', 2, 'X', 'X', 5, 'X', 'X', 'O', 'O'] # current player is O
+      board5 = ['O', 'X', 'X', 'X', 5, 'X', 'O', 'O', 'O'] # current player is X
+      expect(score(board1)).to eq(0)
+      expect(score(board2)).to eq(0)
+      expect(score(board3)).to eq(-10)
+      expect(score(board4)).to eq(0)
+      expect(score(board5)).to eq(10)
     end
   end
 
   context 'minimax' do
     it 'returns the optimal strategic move for a win' do
-      board1 = ['O', 2, 'X', 'X', 5, 'X', 7, 'O', 'O']
-      # board2 = ['X', 'O', 3, 'O', 5, 'X', 'X', 8, 9]
-      # board3 = ['X', 2, 3, 4, 'O', 6, 7, 8, 'X']
-      # board4 = ['X', 2, 3, 4, 'O', 'X', 7, 8, 9]
-      # board5 = [1, 'X', 3, 4, 'O', 'X', 7, 8, 9]
-      # board6 = [1, 2, 3, 4, 'X', 6, 7, 8, 9]
-      expect(minimax(board1, 'X')).to
+      board1 = ['X', 'X', 'O','X', 'X', 'O', 'O', 8, 'O'] # current player is O
+      expect(minimax(board1)).to eq(8)
     end
   end
 
