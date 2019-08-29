@@ -174,12 +174,11 @@ RSpec.describe 'game' do
     end
   end
 
-  # context 'optimal_move' do
-  #   it 'returns the move with the optimal score for the current player' do
-  #     scores = {8=>0, 9=>10}
-  #     player = 'O'
-  #     expect(optimal_move(scores, player)).to eq(8)
-  #   end
-  # end
+  context 'optimal_move' do
+    it 'returns the move with the optimal score for the current player' do
+      board1 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  9]
+      expect(optimal_move(board1)).to eq(9)
+    end
+  end
 
 end #RSpec.describe

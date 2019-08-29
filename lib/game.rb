@@ -79,20 +79,6 @@ def random_square(array, isTest=false)
   isTest ? isTest : array.sample
 end
 
-# def winning_move(board, token) # has the possibility to return a nil value
-#   possible_moves = open_squares(board)
-#   next_move = nil
-#
-#   possible_moves.each do |square_num|
-#     copy_board = board.slice(0 .. -1)
-#     copy_board[square_num - 1] = token
-#     if winner?(copy_board)
-#        next_move = square_num
-#     end
-#   end
-#   return next_move
-# end
-
 def score(board)
   # you're checking for a win prior to the current player making a move, so you want to see if the previous player has won or not.
   player = current_player(board)
@@ -103,18 +89,6 @@ def score(board)
     return 0
   end
 end
-
-
-# def minimax(board)
-#   player = current_player(board)
-#   possible_moves = open_squares(board)
-#   game_over = winner?(board) || draw?(board)
-#   moves = []
-#   move_score = {} # collects each move's square number and score
-#   current_score = score(board)
-#
-#   return current_score if !!game_over
-# end
 
 def minimax(board) # Returns the optimal score of the board
   # return score(board) if game_over
@@ -127,7 +101,6 @@ def minimax(board) # Returns the optimal score of the board
   if winner?(board) || draw?(board)
     return score(board)
   end
-
   possible_moves.each do |square_num|
     new_board = board.slice(0 .. -1)
     new_board[square_num - 1] = player # O
@@ -144,11 +117,24 @@ def minimax(board) # Returns the optimal score of the board
         best_move = square_num
       end
     end
-
   end
   best_score
 end
 
-# def optimal_move(scores, player)
-#
-# end
+def optimal_move(board) # Needs to return a space that will return an optimal move using minimax
+  player = current_player(board)
+  possible_moves = open_squares(board)
+  best_move = nil
+  best_score = nil
+
+  possible_moves.each do |square_num|
+    new_board = board.slice(0 .. -1)
+    new_board[square_num - 1] = player
+    score = minimax(new_board)
+    if best_score == nil || score > best_score
+      best_score = score
+      best_move = square_num
+    end
+  end
+    best_move
+end
