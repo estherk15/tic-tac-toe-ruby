@@ -177,7 +177,12 @@ RSpec.describe 'game' do
   context 'optimal_move' do
     it 'returns the move with the optimal score for the current player' do
       board1 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  9]
+      board2 = ['X', 2, 3, 4, 5, 6, 7, 8, 9]
+      board3 = ['X', 2, 3, 4, 'O', 6, 7, 8, 'X']
+      edge_squares = [2, 4, 6, 8]
       expect(optimal_move(board1)).to eq(9)
+      expect(optimal_move(board2)).to eq(5)
+      expect(edge_squares[0] .. edge_squares[-1]).to cover(optimal_move(board3))
     end
   end
 
