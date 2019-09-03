@@ -136,5 +136,5 @@ def optimal_move(board) # Needs to return a space that will return an optimal mo
       best_move = square_num
     end
   end
-    best_move
+  return best_move
 end

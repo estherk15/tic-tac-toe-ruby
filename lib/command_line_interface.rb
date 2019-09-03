@@ -2,6 +2,13 @@ require_relative './game.rb'
 
 BOARD = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+def welcome
+  puts "Let's play Tic Tac Toe!"
+  display_board(BOARD)
+  print_instructions
+  menu
+end
+
 def display_board(board)
   row1 = " #{board[0]} | #{board[1]} | #{board[2]} "
   row2 = " #{board[3]} | #{board[4]} | #{board[5]} "
@@ -19,11 +26,6 @@ def game_over(player)
   end
 end
 
-def welcome
-  puts "Let's play Tic Tac Toe!"
-  menu
-end
-
 def menu
   puts "Please select Player Mode:
     [1] Single Player
@@ -32,10 +34,15 @@ def menu
   player_mode(input)
 end
 
+def print_instructions
+  instructions = "\nWhen it is your turn, enter the number in the corresponding\nsquare on the board you want to place your token. For example, \nif you want to place an [X] in the top left corner, you would\ntype 1 on your turn.\n"
+  puts instructions
+end
+
 def player_mode(input)
   case input
   when "1"
-    single_player
+    difficulty_mode
     # puts "run single_player"
   when "2"
     multi_player
@@ -43,17 +50,6 @@ def player_mode(input)
   else
     menu
   end
-end
-
-def print_instructions
-  instructions = "\nWhen it is your turn, enter the number in the corresponding\nsquare on the board you want to place your token. For example, \nif you want to place an [X] in the top left corner, you would\ntype 1 on your turn.\n"
-  puts instructions
-end
-
-def single_player
-  display_board(BOARD)
-  print_instructions
-  difficulty_mode
 end
 
 def difficulty_mode
@@ -72,9 +68,29 @@ def difficulty_mode
   end
 end
 
-def player_prompt(player)
-  prompt = "Player #{player}, your move: "
-  puts prompt
+# def player_prompt(player)
+#   prompt = "Player #{player}, your move: "
+#   puts prompt
+#   input = gets.chomp.to_i
+#   if valid_play?(input, BOARD)
+#     move(BOARD, input)
+#     display_board(BOARD)
+#     if winner?(BOARD) || draw?(BOARD)
+#       game_over(player)
+#     else
+#       player = current_player(BOARD)
+#       player_prompt(player)
+#     end
+#   else
+#     puts "***Invalid input, please try again***"
+#     player_prompt(player)
+#   end
+# end
+
+def multi_player
+  player = current_player(BOARD)
+  # player_prompt(token)
+  puts "Player #{player}, your move: "
   input = gets.chomp.to_i
   if valid_play?(input, BOARD)
     move(BOARD, input)
@@ -83,26 +99,78 @@ def player_prompt(player)
       game_over(player)
     else
       player = current_player(BOARD)
-      player_prompt(player)
+      multi_player
     end
   else
     puts "***Invalid input, please try again***"
-    player_prompt(player)
+    multi_player
   end
 end
-#
-# def single_player_easy
-#   token = current_player(BOARD)
-#   if token = "X"
-#     player_move = player_prompt(token)
-#     move(BOARD, player_move)
-#
-#   end
-# end
 
-def multi_player
-  token = current_player(BOARD)
-  display_board(BOARD)
-  print_instructions
-  player_prompt(token)
+def single_player_easy
+  player = current_player(BOARD)
+  # binding.pry
+  if player == "X"
+    puts "Player #{player}, your move: "
+    input = gets.chomp.to_i
+    if valid_play?(input, BOARD)
+      move(BOARD, input)
+      display_board(BOARD)
+      if winner?(BOARD) || draw?(BOARD)
+        game_over(player)
+      else
+        player = current_player(BOARD)
+        single_player_easy
+      end
+    else
+      puts "***Invalid input, please try again***"
+      single_player_easy
+    end
+  end
+  if player == "O"
+    computer_move = random_square(BOARD)
+    puts "Player #{player}'s move: #{computer_move}"
+    move(BOARD, computer_move)
+    display_board(BOARD)
+
+    if winner?(BOARD) || draw?(BOARD)
+      game_over(player)
+    else
+      single_player_easy
+    end
+  end
+end
+
+def single_player_unbeatable
+  player = current_player(BOARD)
+  # binding.pry
+  if player == "X"
+    puts "Player #{player}, your move: "
+    input = gets.chomp.to_i
+    if valid_play?(input, BOARD)
+      move(BOARD, input)
+      display_board(BOARD)
+      if winner?(BOARD) || draw?(BOARD)
+        game_over(player)
+      else
+        player = current_player(BOARD)
+        single_player_unbeatable
+      end
+    else
+      puts "***Invalid input, please try again***"
+      single_player_unbeatable
+    end
+  end
+  if player == "O"
+    computer_move = random_square(BOARD)
+    puts "Player #{player}'s move: #{computer_move}"
+    move(BOARD, computer_move)
+    display_board(BOARD)
+
+    if winner?(BOARD) || draw?(BOARD)
+      game_over(player)
+    else
+      single_player_unbeatable
+    end
+  end
 end
