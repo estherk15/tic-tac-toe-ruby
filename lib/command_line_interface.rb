@@ -162,7 +162,7 @@ def single_player_unbeatable
     end
   end
   if player == "O"
-    computer_move = random_square(BOARD)
+    computer_move = optimal_move(BOARD)
     puts "Player #{player}'s move: #{computer_move}"
     move(BOARD, computer_move)
     display_board(BOARD)
