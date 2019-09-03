@@ -37,8 +37,8 @@ def empty_spot?(square_spot, board)
   board[index] != 'X' && board[index] != 'O'
 end
 
-def valid_play?(num)
-  valid_input?(num) && valid_number?(num)
+def valid_play?(num, board)
+  valid_input?(num) && valid_number?(num) && board[num-1].class == Integer
 end
 
 def to_index(num)
@@ -64,7 +64,7 @@ end
 
 def move(board, input)
   token = current_player(board)
-  if valid_play?(input) && empty_spot?(input, board)
+  if valid_play?(input, board) && empty_spot?(input, board)
     index = to_index(input)
     board[index] = token
     board

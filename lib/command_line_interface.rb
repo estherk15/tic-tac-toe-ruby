@@ -11,6 +11,14 @@ def display_board(board)
   puts display
 end
 
+def game_over(player)
+  if draw?(BOARD)
+    puts "It\'s a tie, you\'re both winners! Huzzah!"
+  else winner?(BOARD)
+    puts "Player #{player} is the Winner!!!"
+  end
+end
+
 def welcome
   puts "Let's play Tic Tac Toe!"
   menu
@@ -30,7 +38,7 @@ def player_mode(input)
     single_player
     # puts "run single_player"
   when "2"
-    puts "run multi_player"
+    multi_player
     # multi_player
   else
     menu
@@ -49,7 +57,8 @@ def single_player
 end
 
 def difficulty_mode
-  puts "Please select difficulty level:
+  puts "
+  Please select difficulty level:
     [1] Easy
     [2] Unbeatable"
   input = gets.chomp
@@ -63,6 +72,37 @@ def difficulty_mode
   end
 end
 
-def single_player_easy
-  
+def player_prompt(player)
+  prompt = "Player #{player}, your move: "
+  puts prompt
+  input = gets.chomp.to_i
+  if valid_play?(input, BOARD)
+    move(BOARD, input)
+    display_board(BOARD)
+    if winner?(BOARD) || draw?(BOARD)
+      game_over(player)
+    else
+      player = current_player(BOARD)
+      player_prompt(player)
+    end
+  else
+    puts "***Invalid input, please try again***"
+    player_prompt(player)
+  end
+end
+#
+# def single_player_easy
+#   token = current_player(BOARD)
+#   if token = "X"
+#     player_move = player_prompt(token)
+#     move(BOARD, player_move)
+#
+#   end
+# end
+
+def multi_player
+  token = current_player(BOARD)
+  display_board(BOARD)
+  print_instructions
+  player_prompt(token)
 end
