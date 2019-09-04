@@ -37,7 +37,12 @@ def menu
 end
 
 def print_instructions
-  instructions = "\nWhen it is your turn, enter the number in the corresponding\nsquare on the board you want to place your token. For example, \nif you want to place an [X] in the top left corner, you would\ntype 1 on your turn.\n"
+  instructions = "
+  When it is your turn, enter the number in the corresponding
+  square on the board you want to place your token. For example,
+  if you want to place an [X] in the top left corner, you would
+  type 1 on your turn.
+  "
   puts instructions
 end
 
@@ -140,10 +145,8 @@ def single_player_easy
   end
 end
 
-
 def single_player_unbeatable
   player = current_player(BOARD)
-  # binding.pry
   if player == 'X'
     puts "Player #{player}, your move: "
     input = gets.chomp.to_i

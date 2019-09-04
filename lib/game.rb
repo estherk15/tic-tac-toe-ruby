@@ -52,7 +52,9 @@ def winner?(board)
   winner = false
   WINNING_COMBOS.any? do |combo|
     current_combo = combo.map { |index| board[index] }
-    win_combo = ((current_combo[0] == current_combo[1]) && (current_combo[1] == current_combo[2]))
+    first_two = (current_combo[0] == current_combo[1])
+    last_two = current_combo[1] == current_combo[2]
+    win_combo = first_two && last_two
     winner = win_combo && (current_combo[0].class == String)
   end
 end
@@ -95,10 +97,9 @@ def minimax(board)
   possible_moves.each do |square_num|
     new_board = board.slice(0..-1)
     new_board[square_num - 1] = player
-    new_board_score = minimax(new_board) 
-
+    new_board_score = minimax(new_board)
     if player == 'O' && best_score < new_board_score
-      best_score = new_board_score
+        best_score = new_board_score
     elsif player == 'X' && best_score > new_board_score
       best_score = new_board_score
     end
