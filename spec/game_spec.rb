@@ -49,10 +49,12 @@ RSpec.describe 'game' do
 
   context 'valid_play?' do
     it 'returns true if input is both a number and within range' do
-      expect(valid_play?(1)).to eq(true)
+      board = [1, "X", 3, 4, 5, 6, "O", 8, 9]
+      expect(valid_play?(1, board)).to eq(true)
     end
     it 'returns false if input is neither a number or within range' do
-      expect(valid_play?(-1)).to eq(false)
+      board = [1, "X", 3, 4, 5, 6, "O", 8, 9]
+      expect(valid_play?(-1, board)).to eq(false)
     end
   end
 
