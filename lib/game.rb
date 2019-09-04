@@ -86,16 +86,16 @@ def score(board)
 end
 
 def minimax(board)
-  player = current_player(board) #
-  possible_moves = open_squares(board) # Array of square_nums NOT indexes
-  best_score = player == 'O' ? -Float::INFINITY : Float::INFINITY
+  player = current_player(board) # X or O
+  possible_moves = open_squares(board) # Array of empty squares
+  best_score = player == 'O' ? -100 : 100 # Placeholder for min/max
 
   return score(board) if winner?(board) || draw?(board)
 
   possible_moves.each do |square_num|
     new_board = board.slice(0..-1)
-    new_board[square_num - 1] = player # O
-    new_board_score = minimax(new_board) # 10
+    new_board[square_num - 1] = player
+    new_board_score = minimax(new_board) 
 
     if player == 'O' && best_score < new_board_score
       best_score = new_board_score
