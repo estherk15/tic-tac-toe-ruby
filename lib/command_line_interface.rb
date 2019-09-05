@@ -75,7 +75,9 @@ def difficulty_mode
   end
 end
 
-# def player_prompt(player)
+# def player_prompt(player, mode)
+#   binding.pry
+#   game_mode = ->{mode}
 #   prompt = "Player #{player}, your move: "
 #   puts prompt
 #   input = gets.chomp.to_i
@@ -86,7 +88,7 @@ end
 #       game_over(player)
 #     else
 #       player = current_player(BOARD)
-#       player_prompt(player)
+#       game_mode.call(player, mode)
 #     end
 #   else
 #     puts "***Invalid input, please try again***"
@@ -94,17 +96,22 @@ end
 #   end
 # end
 
+def display_new_board(input, board)
+  move(board, input)
+  display_board(board)
+
+end
+
 def multi_player
   player = current_player(BOARD)
   puts "Player #{player}, your move: "
   input = gets.chomp.to_i
   if valid_play?(input, BOARD)
-    move(BOARD, input)
-    display_board(BOARD)
+    display_new_board(input, BOARD)
     if winner?(BOARD) || draw?(BOARD)
       game_over(player)
     else
-      game_mode
+      multi_player
     end
   else
     puts '***Invalid input, please try again***'
@@ -114,13 +121,11 @@ end
 
 def single_player_easy
   player = current_player(BOARD)
-  # binding.pry
   if player == 'X'
     puts "Player #{player}, your move: "
     input = gets.chomp.to_i
     if valid_play?(input, BOARD)
-      move(BOARD, input)
-      display_board(BOARD)
+      display_new_board(input, BOARD)
       if winner?(BOARD) || draw?(BOARD)
         game_over(player)
       else
@@ -136,8 +141,7 @@ def single_player_easy
 
   computer_move = random_square(BOARD)
   puts "Player #{player}'s move: #{computer_move}"
-  move(BOARD, computer_move)
-  display_board(BOARD)
+  display_new_board(computer_move, BOARD)
   if winner?(BOARD) || draw?(BOARD)
     game_over(player)
   else
@@ -151,8 +155,7 @@ def single_player_unbeatable
     puts "Player #{player}, your move: "
     input = gets.chomp.to_i
     if valid_play?(input, BOARD)
-      move(BOARD, input)
-      display_board(BOARD)
+      display_new_board(input, BOARD)
       if winner?(BOARD) || draw?(BOARD)
         game_over(player)
       else
@@ -168,8 +171,7 @@ def single_player_unbeatable
 
   computer_move = optimal_move(BOARD)
   puts "Player #{player}'s move: #{computer_move}"
-  move(BOARD, computer_move)
-  display_board(BOARD)
+  display_new_board(computer_move, BOARD)
 
   if winner?(BOARD) || draw?(BOARD)
     game_over(player)

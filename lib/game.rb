@@ -107,7 +107,7 @@ def minimax(board)
   best_score
 end
 
-def optimal_move(board) 
+def optimal_move(board)
   player = current_player(board)
   possible_moves = open_squares(board)
   best_move = nil
