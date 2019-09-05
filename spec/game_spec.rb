@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require_relative '../lib/game'
 require 'pry'
@@ -19,7 +21,7 @@ RSpec.describe 'game' do
       expect(valid_input?(2)).to eq(true)
     end
     it 'given a string it returns false' do
-      expect(valid_input?("string")).to eq(false)
+      expect(valid_input?('string')).to eq(false)
     end
   end
 
@@ -49,11 +51,11 @@ RSpec.describe 'game' do
 
   context 'valid_play?' do
     it 'returns true if input is both a number and within range' do
-      board = [1, "X", 3, 4, 5, 6, "O", 8, 9]
+      board = [1, 'X', 3, 4, 5, 6, 'O', 8, 9]
       expect(valid_play?(1, board)).to eq(true)
     end
     it 'returns false if input is neither a number or within range' do
-      board = [1, "X", 3, 4, 5, 6, "O", 8, 9]
+      board = [1, 'X', 3, 4, 5, 6, 'O', 8, 9]
       expect(valid_play?(-1, board)).to eq(false)
     end
   end
@@ -77,7 +79,7 @@ RSpec.describe 'game' do
 
   context 'full_board?' do
     it 'returns true if all the spots on the board are filled with a token' do
-      board = ['X', 'X', 'X', 'O', 'O', 'X', 'O', 'O', 'X']
+      board = %w[X X X O O X O O X]
       expect(full_board?(board)).to eq(true)
     end
     it 'returns false if there are still spots to play' do
@@ -101,7 +103,7 @@ RSpec.describe 'game' do
 
   context 'draw?' do
     it 'returns true if there are no winner and the board is full' do
-      board = ['X', 'O', 'X', 'O', 'X', 'X', 'O', 'X', 'O']
+      board = %w[X O X O X X O X O]
       expect(draw?(board)).to eq(true)
     end
   end
@@ -113,7 +115,7 @@ RSpec.describe 'game' do
     end
   end
 
-# Single Player Easy mode *********************************
+  # Single Player Easy mode *********************************
   context 'open_squares' do
     it 'returns all the squares that do not currently have a token' do
       board = ['O', 2, 'X', 4, 'X', 6, 'O', 8, 'X']
@@ -127,24 +129,10 @@ RSpec.describe 'game' do
       expect(random_square(available_squares, 8)).to eq(8)
     end
     it 'given an array returns a random element in the array' do
-      available_squares = [2, 4, 6, 8]
-      expect(available_squares[0]..available_squares[-1]).to cover(random_square(available_squares))
+      open = [2, 4, 6, 8]
+      expect(open[0]..open[-1]).to cover(random_square(open))
     end
   end
-
-# Single Player Unbeatable mode ****************************
-  # context 'winning_move' do #this is only called when the player is the computer
-  #   it 'returns the square that will result in three in a row for given token' do
-  #     board1 = ['X', 'O', 'X', 'X', 'O', 'X', 'O', 8, 9]
-  #     board2 = ['X', 'O', 'X', 4, 'X', 'O', 'O', 8, 9]
-  #     board3 = ['O', 2, 'O', 'X', 'X', 6, 'X', 8, 9]
-  #     board4 = ['X', 'O', 'X', 'X', 'O', 6, 7, 8, 9]
-  #     expect(winning_move(board1, 'O')).to eq(8)
-  #     expect(winning_move(board2, 'X')).to eq(9)
-  #     expect(winning_move(board3, 'O')).to eq(2)
-  #     expect(winning_move(board4, 'O')).to eq(8)
-  #   end
-  # end
 
   context 'score' do
     it 'returns a min or max score based on status of the board' do
@@ -163,9 +151,9 @@ RSpec.describe 'game' do
 
   context 'minimax' do
     it 'returns the moves and their resulting scores' do
-      board1 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 'O',  9] # current player is X
-      board2 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  'O'] # current player is O
-      board3 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  9] # current player is O
+      board1 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 'O', 9]
+      board2 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 8,  'O']
+      board3 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 8,  9]
       board4 = ['X', 2, 'X', 'O', 'O', 6, 7, 8, 9]
       board5 = ['X', 2, 'O', 'O', 'O', 'X', 'X', 8, 'X']
       expect(minimax(board1)).to eq(-10)
@@ -178,14 +166,14 @@ RSpec.describe 'game' do
 
   context 'optimal_move' do
     it 'returns the move with the optimal score for the current player' do
-      board1 = ['X', 'X', 'O','X', 'X', 'O','O', 8,  9]
+      board1 = ['X', 'X', 'O', 'X', 'X', 'O', 'O', 8, 9]
       board2 = ['X', 2, 3, 4, 5, 6, 7, 8, 9]
       board3 = ['X', 2, 3, 4, 'O', 6, 7, 8, 'X']
       edge_squares = [2, 4, 6, 8]
       expect(optimal_move(board1)).to eq(9)
       expect(optimal_move(board2)).to eq(5)
-      expect(edge_squares[0] .. edge_squares[-1]).to cover(optimal_move(board3))
+      expect(edge_squares[0]..edge_squares[-1]).to cover(optimal_move(board3))
     end
   end
-
-end #RSpec.describe
+end
+# RSpec.describe
