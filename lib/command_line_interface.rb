@@ -75,26 +75,24 @@ def difficulty_mode
   end
 end
 
-# def player_prompt(player, mode)
-#   binding.pry
-#   game_mode = ->{mode}
-#   prompt = "Player #{player}, your move: "
-#   puts prompt
-#   input = gets.chomp.to_i
-#   if valid_play?(input, BOARD)
-#     move(BOARD, input)
-#     display_board(BOARD)
-#     if winner?(BOARD) || draw?(BOARD)
-#       game_over(player)
-#     else
-#       player = current_player(BOARD)
-#       game_mode.call(player, mode)
-#     end
-#   else
-#     puts "***Invalid input, please try again***"
-#     player_prompt(player)
-#   end
-# end
+def player_prompt
+  # binding.pry
+  player = current_player(BOARD)
+  puts "Player #{player}, your move: "
+
+  input = gets.chomp.to_i
+  if valid_play?(input, BOARD)
+    display_new_board(input, BOARD)
+    if winner?(BOARD) || draw?(BOARD)
+      game_over(player)
+    elsif block_given?
+      yield
+    end
+  elsif block_given?
+    puts '***Invalid input, please try again***'
+    yield
+  end
+end
 
 def display_new_board(input, board)
   move(board, input)
@@ -102,18 +100,7 @@ def display_new_board(input, board)
 end
 
 def multi_player
-  player = current_player(BOARD)
-  puts "Player #{player}, your move: "
-  input = gets.chomp.to_i
-  if valid_play?(input, BOARD)
-    display_new_board(input, BOARD)
-    if winner?(BOARD) || draw?(BOARD)
-      game_over(player)
-    else
-      multi_player
-    end
-  else
-    puts '***Invalid input, please try again***'
+  player_prompt do
     multi_player
   end
 end
@@ -121,18 +108,7 @@ end
 def single_player_easy
   player = current_player(BOARD)
   if player == 'X'
-    puts "Player #{player}, your move: "
-    input = gets.chomp.to_i
-    if valid_play?(input, BOARD)
-      display_new_board(input, BOARD)
-      if winner?(BOARD) || draw?(BOARD)
-        game_over(player)
-      else
-        player = current_player(BOARD)
-        single_player_easy
-      end
-    else
-      puts '***Invalid input, please try again***'
+    player_prompt do
       single_player_easy
     end
   end
@@ -151,18 +127,7 @@ end
 def single_player_unbeatable
   player = current_player(BOARD)
   if player == 'X'
-    puts "Player #{player}, your move: "
-    input = gets.chomp.to_i
-    if valid_play?(input, BOARD)
-      display_new_board(input, BOARD)
-      if winner?(BOARD) || draw?(BOARD)
-        game_over(player)
-      else
-        player = current_player(BOARD)
-        single_player_unbeatable
-      end
-    else
-      puts '***Invalid input, please try again***'
+    player_prompt do
       single_player_unbeatable
     end
   end
