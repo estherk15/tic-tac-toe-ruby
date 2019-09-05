@@ -99,7 +99,6 @@ end
 def display_new_board(input, board)
   move(board, input)
   display_board(board)
-
 end
 
 def multi_player

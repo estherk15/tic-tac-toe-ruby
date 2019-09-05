@@ -14,7 +14,7 @@ WINNING_COMBOS = [
 ].freeze
 
 def play_count(board)
-  count = board.count { |square| square == 'X' || square == 'O' }
+  count = board.count { |square| %w[X O].include? square }
   count + 1
 end
 
@@ -45,7 +45,7 @@ def to_index(num)
 end
 
 def full_board?(board)
-  board.all? { |square| square == 'X' || square == 'O' }
+  board.all? { |square| %w[X O].include? square }
 end
 
 def winner?(board)
