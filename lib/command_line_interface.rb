@@ -104,7 +104,7 @@ def multi_player
     if winner?(BOARD) || draw?(BOARD)
       game_over(player)
     else
-      multi_player
+      game_mode
     end
   else
     puts '***Invalid input, please try again***'

@@ -98,21 +98,21 @@ def minimax(board)
     new_board = board.slice(0..-1)
     new_board[square_num - 1] = player
     new_board_score = minimax(new_board)
-    if player == 'O' && best_score < new_board_score
-        best_score = new_board_score
-    elsif player == 'X' && best_score > new_board_score
+    if player == 'O' && (best_score < new_board_score)
+      best_score = new_board_score
+    elsif player == 'X' && (best_score > new_board_score)
       best_score = new_board_score
     end
   end
   best_score
 end
 
-def optimal_move(board)
-  # Needs to return a space that will return an optimal move using minimax
+def optimal_move(board) 
   player = current_player(board)
   possible_moves = open_squares(board)
   best_move = nil
   best_score = nil
+
   possible_moves.each do |square_num|
     new_board = board.slice(0..-1)
     new_board[square_num - 1] = player
