@@ -63,6 +63,14 @@ def draw?(board)
   full_board?(board) && !winner?(board)
 end
 
+def game_over?(board)
+  if winner?(board) || draw?(board)
+    true
+  else
+    false
+  end
+end
+
 def move(board, input)
   token = current_player(board)
   return unless valid_play?(input, board) && empty_spot?(input, board)
@@ -89,12 +97,11 @@ end
 
 def minimax(board)
   player = current_player(board) # X or O
-  possible_moves = open_squares(board) # Array of empty squares
   best_score = player == 'O' ? -100 : 100 # Placeholder for min/max
 
-  return score(board) if winner?(board) || draw?(board)
+  return score(board) if game_over?(board)
 
-  possible_moves.each do |square_num|
+  open_squares(board).each do |square_num|
     new_board = board.slice(0..-1)
     new_board[square_num - 1] = player
     new_board_score = minimax(new_board)

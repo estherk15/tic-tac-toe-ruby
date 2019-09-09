@@ -20,7 +20,7 @@ def display_board(board)
   puts display
 end
 
-def game_over(player)
+def game_over_msg(player)
   if draw?(BOARD)
     puts "It\'s a tie, you\'re both winners! Huzzah!"
   elsif winner?(BOARD)
@@ -50,10 +50,8 @@ def player_mode(input)
   case input
   when '1'
     difficulty_mode
-    # puts "run single_player"
   when '2'
     multi_player
-    # multi_player
   else
     menu
   end
@@ -76,15 +74,15 @@ def difficulty_mode
 end
 
 def player_prompt
-  # binding.pry
   player = current_player(BOARD)
   puts "Player #{player}, your move: "
 
   input = gets.chomp.to_i
+
   if valid_play?(input, BOARD)
     display_new_board(input, BOARD)
     if winner?(BOARD) || draw?(BOARD)
-      game_over(player)
+      game_over_msg(player)
     elsif block_given?
       yield
     end
@@ -117,8 +115,8 @@ def single_player_easy
   computer_move = random_square(BOARD)
   puts "Player #{player}'s move: #{computer_move}"
   display_new_board(computer_move, BOARD)
-  if winner?(BOARD) || draw?(BOARD)
-    game_over(player)
+  if game_over?(BOARD)
+    game_over_msg(player)
   else
     single_player_easy
   end
@@ -137,8 +135,8 @@ def single_player_unbeatable
   puts "Player #{player}'s move: #{computer_move}"
   display_new_board(computer_move, BOARD)
 
-  if winner?(BOARD) || draw?(BOARD)
-    game_over(player)
+  if game_over?(BOARD)
+    game_over_msg(player)
   else
     single_player_unbeatable
   end

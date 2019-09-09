@@ -108,6 +108,21 @@ RSpec.describe 'game' do
     end
   end
 
+  context 'game_over?' do
+    it 'returns true if there is a winner or a draw' do
+      board1 = %w[X X X O O X O O X]
+      board2 = %w[X O X O X X O X O]
+      expect(game_over?(board1)).to eq(true)
+      expect(game_over?(board2)).to eq(true)
+    end
+    it 'returns false if there is neither winner nor draw' do
+      board1 = ['X', 'X', 'O', 'O', 'O', 'X', 'X', 8, 9]
+      board2 = ['X', 'O', 'X', 'O', 5, 6, 7, 8, 'X']
+      expect(game_over?(board1)).to eq(false)
+      expect(game_over?(board2)).to eq(false)
+    end
+  end
+
   context 'move' do
     it 'replaced the square on the board with token if empty' do
       board = ['X', 'O', 'X', 4, 5, 6, 7, 8, 9]

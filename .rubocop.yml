@@ -7,15 +7,12 @@ AllCops:
 #Customize rules
 Metrics/LineLength:
   Max: 95
-
-Metrics/MethodLength:
-  Max: 35
-
-Metrics/AbcSize:
-  Enabled: false
-
-BlockLength:
-  Max: 70
+#
+# Metrics/MethodLength:
+#   Max: 15
+# 
+# Metrics/AbcSize:
+#   Enabled: false
 
 Style/MutableConstant:
   Enabled: false
