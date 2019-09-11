@@ -95,13 +95,13 @@ def score(board)
   player == 'O' ? -10 : 10
 end
 
-# def winning_move(board)
-#
-# end
+def score_placeholder(player)
+  player == 'O' ? -100 : 100
+end
 
 def minimax(board)
   player = current_player(board) # X or O
-  best_score = player == 'O' ? -100 : 100 # Placeholder for min/max
+  best_score = score_placeholder(player)
 
   return score(board) if game_over?(board)
 
